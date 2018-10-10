@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>Day Times</title>
+	<script type="text/javascript" src="lib/PrayTimes.js"></script>
+	<script type="text/javascript" src="lib/ShiaPrayTimes.js"></script>
+	<script type="text/javascript" src="lib/functions.js"></script>
+	<script type="text/javascript" src="assets/cityfile.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/styles.css">
+</head>
+
+<body>
+	<select id="city" onchange="cityChange()"></select>
+
+	<div class="today">
+		<p id="dayName">Wed</p>
+		<p id="dayDate">2018-6-20</p>
+	</div>
+
+	<div class="maintimes">
+		<table>
+			<tr>
+				<td>الفجر</td>
+				<td id="fajrval">6:15</td>
+			</tr>
+			<tr>
+				<td>الظهر</td>
+				<td id="dhuhrval">12:15</td>
+			</tr>
+			<tr>
+				<td>المغرب</td>
+				<td id="maghribval">6:16</td>
+			</tr>
+		</table>
+	</div>
+
+
+
+	<div id="qibla" class="compass">
+		<p>
+			&#x279C;
+		</p>
+	</div>
+
+	<table id="timetable" class="timetable">
+		<tbody></tbody>
+	</table>
+
+	<script type="text/javascript">
+		var currentDate = new Date();
+		var timeFormat = 1;
+
+		//Load the city drop-down list
+		var cityList = $('city');
+		for (var i = 0; i < cityParams.length; i++) {
+			var newCity = document.createElement('option');
+			newCity.text = cityParams[i][0];
+			newCity.value = i;
+			cityList.add(newCity);
+		}
+
+		update(25.4105522, 55.5022193, 4, 8);
+
+		function cityChange() {
+			var i = 1 * $('city').value;
+
+			update(cityParams[i][1], cityParams[i][2], cityParams[i][3], cityParams[i][4]);
+		}
+	</script>
+
+</body>
+
+</html>

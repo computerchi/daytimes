@@ -1,0 +1,118 @@
+body {
+  font-family: "Calibri", "Times New Roman", Times, serif;
+  font-size: 3em;
+  color: #404040;
+  text-align: right;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 10px;
+  direction: rtl;
+}
+
+#dayName {
+  font-size: 1.2em;
+}
+
+#dayDate {
+  font-size: 1em;
+}
+
+#city {
+  grid-column: 1 / span 2;
+  grid-row: 1;
+  font-size: 1.6em;
+  font-family: "Calibri";
+}
+
+.today {
+  grid-column: 1 / span 1;
+  grid-row: 2 / span 1;
+  font-size: 2em;
+  color: #fff;
+  background-color: rgb(13, 13, 80);
+  font-weight: bold;
+  padding: 30px;
+  line-height: 0.5em;
+}
+
+.maintimes {
+  grid-column: 1 / span 1;
+  grid-row: 3 / span 1;
+  font-size: 2em;
+  color: #fff;
+  background-color: rgb(13, 13, 80);
+  line-height: 1.6em;
+  padding: 30px 0;
+}
+
+.maintimes table {
+  padding: 0 10px 0 40px;
+}
+.maintimes td {
+  padding: 0 10px;
+}
+
+.header {
+  background: #eef;
+  border-bottom: 1px solid #ddd;
+  padding: 7px;
+  margin: 0px;
+}
+
+.timetable {
+  grid-column: 2 / span 1;
+  grid-row: 2 / span 3;
+  border-width: 1px;
+  border-style: none;
+  border-collapse: collapse;
+  border-color: gray;
+  margin: 20px;
+}
+
+.timetable td {
+  border-width: 1px;
+  border-spacing: 1px;
+  padding: 1px;
+  border-bottom-style: dotted;
+  border-color: #cccccc;
+  text-align: right;
+}
+
+.season {
+  color: #3a707e;
+}
+
+.shadow {
+  color: #3a7e59;
+}
+
+.compass {
+  grid-column: 1 / span 1;
+  grid-row: 2 / span 1;
+  border: 2px solid #ddd;
+  border-radius: 50%;
+  color: black;
+  background: #eef;
+  width: 100px;
+  height: 100px;
+  font-size: 47px;
+  font-weight: bold;
+  text-align: center;
+  margin: auto;
+  box-sizing: border-box;
+  line-height: 0px;
+  padding: 0 0 20px 0;
+  margin: auto 550px auto auto;
+}
+
+@media (max-width: 1000px) {
+  body {
+    grid-template-columns: 1fr;
+  }
+  .timetable {
+    grid-column: 1 / span 1;
+    grid-row: 4 / auto;
+  }
+}
