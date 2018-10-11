@@ -18,9 +18,8 @@
 		<div class="card border-primary text-center mt-3">
 			<div class="card-header text-white bg-primary mb-3">
 				<h1 class="display-1">
-					<span id="dayName">Wed</span>
-					&nbsp;
-					<span id="dayDate">2018-6-20</span>
+					<p id="dayName">Wed</p>
+					<p id="dayDate">2018-6-20</p>
 				</h1>
 			</div>
 			<div class="card-body">
@@ -40,9 +39,9 @@
 				<select class="form-control form-control-lg" id="city" onchange="cityChange()"></select>
 
 			</div>
-			<!-- <div class="card-footer text-muted">
-				Choose your city!
-			</div> -->
+			<div class="card-footer text-muted">
+				<p id="cityName" class="display-2">عجمان</p>
+			</div>
 		</div>
 
 		<!-- <div id="qibla" class="compass">
@@ -98,6 +97,7 @@
 
 			function cityChange() {
 				var i = 1 * $('city').value;
+				$("cityName").innerHTML = cityParams[i][0];
 
 				update(cityParams[i][1], cityParams[i][2], cityParams[i][3], cityParams[i][4]);
 			}
