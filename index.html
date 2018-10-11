@@ -8,68 +8,100 @@
 	<script type="text/javascript" src="./js/PrayTimes.js"></script>
 	<script type="text/javascript" src="./js/ShiaPrayTimes.js"></script>
 	<script type="text/javascript" src="./js/functions.js"></script>
+	<link rel="stylesheet" type="text/css" href="./css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href="./css/styles.css">
 </head>
 
 <body>
-	<select id="city" onchange="cityChange()"></select>
+	<div class="container">
 
-	<div class="today">
-		<p id="dayName">Wed</p>
-		<p id="dayDate">2018-6-20</p>
+		<div class="card border-primary text-center mt-3">
+			<div class="card-header text-white bg-primary mb-3">
+				<h1>
+					<span id="dayName">Wed</span>
+					&nbsp;
+					<span id="dayDate">2018-6-20</span>
+				</h1>
+			</div>
+			<div class="card-body">
+				<table class="table">
+					<tr>
+						<td>الفجر</td>
+						<td>الظهر</td>
+						<td>المغرب</td>
+					</tr>
+					<tr>
+						<td id="fajrval">6:15</td>
+						<td id="dhuhrval">12:15</td>
+						<td id="maghribval">6:16</td>
+					</tr>
+				</table>
+
+				<select class="form-control" id="city" onchange="cityChange()"></select>
+			</div>
+			<!-- <div class="card-footer text-muted">
+				Choose your city!
+			</div> -->
+		</div>
+
+		<!-- <div id="qibla" class="compass">
+			<p>
+				&#x279C;
+			</p>
+		</div> -->
+
+		<div class="card text-center border-success mt-3">
+			<div class="card-header text-white bg-success mb-3">
+				<h2 class="text-center">مواقيت</h2>
+			</div>
+			<div class="card-body">
+				<table id="timetable" class="table">
+					<tbody></tbody>
+				</table>
+			</div>
+		</div>
+		<div class="card text-center border-warning mt-3">
+			<div class="card-header text-white bg-warning mb-3">
+				<h2 class="text-center">تواريخ</h2>
+			</div>
+			<div class="card-body">
+				<table id="datetable" class="table">
+					<tbody></tbody>
+				</table>
+			</div>
+		</div>
+		<div class="card text-center border-info mt-3 mb-3">
+			<div class="card-header text-white bg-info mb-3">
+				<h2 class="text-center">مواسم</h2>
+			</div>
+			<div class="card-body">
+				<table id="seasontable" class="table">
+					<tbody></tbody>
+				</table>
+			</div>
+		</div>
+		<script type="text/javascript">
+			var currentDate = new Date();
+			var timeFormat = 1;
+
+			//Load the city drop-down list
+			var cityList = $('city');
+			for (var i = 0; i < cityParams.length; i++) {
+				var newCity = document.createElement('option');
+				newCity.text = cityParams[i][0];
+				newCity.value = i;
+				cityList.add(newCity);
+			}
+
+			update(25.4105522, 55.5022193, 4, 8);
+
+			function cityChange() {
+				var i = 1 * $('city').value;
+
+				update(cityParams[i][1], cityParams[i][2], cityParams[i][3], cityParams[i][4]);
+			}
+		</script>
 	</div>
-
-	<div class="maintimes">
-		<table>
-			<tr>
-				<td>الفجر</td>
-				<td id="fajrval">6:15</td>
-			</tr>
-			<tr>
-				<td>الظهر</td>
-				<td id="dhuhrval">12:15</td>
-			</tr>
-			<tr>
-				<td>المغرب</td>
-				<td id="maghribval">6:16</td>
-			</tr>
-		</table>
-	</div>
-
-
-
-	<div id="qibla" class="compass">
-		<p>
-			&#x279C;
-		</p>
-	</div>
-
-	<table id="timetable" class="timetable">
-		<tbody></tbody>
-	</table>
-
-	<script type="text/javascript">
-		var currentDate = new Date();
-		var timeFormat = 1;
-
-		//Load the city drop-down list
-		var cityList = $('city');
-		for (var i = 0; i < cityParams.length; i++) {
-			var newCity = document.createElement('option');
-			newCity.text = cityParams[i][0];
-			newCity.value = i;
-			cityList.add(newCity);
-		}
-
-		update(25.4105522, 55.5022193, 4, 8);
-
-		function cityChange() {
-			var i = 1 * $('city').value;
-
-			update(cityParams[i][1], cityParams[i][2], cityParams[i][3], cityParams[i][4]);
-		}
-	</script>
-
 </body>
 
 </html>

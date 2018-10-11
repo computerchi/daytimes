@@ -43,6 +43,32 @@ function makeTable(year, month, lat, lng, timeZone, dst, dstDates) {
     midnight: "منتصف الليل"
   };
 
+  var dateItems = {
+    day: "تاريخ",
+    daysequence: "تسلسل",
+    date: "التاريخ اليومي",
+    dayname: "اسم اليوم",
+    frenchdayname: "فرنسي",
+    persiandayname: "فارسي",
+    arabicdayname: "عربي",
+    qiblatime: "وقت الشمس باتجاه القبلة",
+    dhuhr: "زوال",
+    sunaltitude: "غاية ارتفاع الشمس",
+    shadow: "طول واتجاه الظل ظهرا",
+    dhuhrshadow: "ظل الظهر",
+    fadasrshadow: "ظل بداية فضيلة العصر",
+    asrshadow: "ظل العصر"
+  };
+
+  var seasonItems = {
+    suhail: "سهيل",
+    nawruz: "نوروز",
+    anwaa: "أنواء",
+    mawasem: "مواسم",
+    truezodiac: "البرج الحقيقي",
+    standardzodiac: "البرج الاصطلاحي"
+  };
+
   var spt = new ShiaPrayTimes();
 
   var times = spt.times(
@@ -62,13 +88,32 @@ function makeTable(year, month, lat, lng, timeZone, dst, dstDates) {
   $("dhuhrval").innerHTML = times.athandhuhr;
   $("maghribval").innerHTML = times.maghrib;
 
-  var tbody = document.createElement("tbody");
-  for (var z in items) {
-    tbody.appendChild(makeTableRow(times[z], items[z], z));
+  {
+    let tbody = document.createElement("tbody");
+    for (let z in items) {
+      tbody.appendChild(makeTableRow(times[z], items[z], z));
+    }
+    removeAllChild($("timetable"));
+    $("timetable").appendChild(tbody);
   }
 
-  removeAllChild($("timetable"));
-  $("timetable").appendChild(tbody);
+  {
+    let tbody = document.createElement("tbody");
+    for (let z in dateItems) {
+      tbody.appendChild(makeTableRow(times[z], dateItems[z], z));
+    }
+    removeAllChild($("datetable"));
+    $("datetable").appendChild(tbody);
+  }
+
+  {
+    let tbody = document.createElement("tbody");
+    for (let z in seasonItems) {
+      tbody.appendChild(makeTableRow(times[z], seasonItems[z], z));
+    }
+    removeAllChild($("seasontable"));
+    $("seasontable").appendChild(tbody);
+  }
 
   var dir = spt.getQiblaDirection(lat, lng);
   $("qibla").style.transform = "rotate(" + (dir - 90).toFixed(0) + "deg)";
