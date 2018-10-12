@@ -45,14 +45,16 @@ function makeTable(year, month, lat, lng, timeZone, dst, dstDates) {
 
   var dateItems = {
     day: "تاريخ",
-    daysequence: "تسلسل",
-    date: "التاريخ اليومي",
-    dayname: "اسم اليوم",
-    frenchdayname: "فرنسي",
-    persiandayname: "فارسي",
-    arabicdayname: "عربي",
+    daysequence: " تسلسل اليوم في السنة",
+    date: "التاريخ الميلادي",
+    hijridate: "التاريخ الهجري",
+    juliandate: "التاريخ اليولياني",
+    arabicdayname: "اسم اليوم العربي",
+    dayname: " اسم اليوم الانجليزي",
+    frenchdayname: "اسم اليوم الفرنسي",
+    persiandayname: "اسم اليوم الفارسي",
     qiblatime: "وقت الشمس باتجاه القبلة",
-    dhuhr: "زوال",
+    dhuhr: "وفت الزوال",
     sunaltitude: "غاية ارتفاع الشمس",
     shadow: "طول واتجاه الظل ظهرا",
     dhuhrshadow: "ظل الظهر",
@@ -115,33 +117,33 @@ function makeTable(year, month, lat, lng, timeZone, dst, dstDates) {
     $("seasontable").appendChild(tbody);
   }
 
-  var dir = spt.getQiblaDirection(lat, lng);
-  $("qibla").style.transform = "rotate(" + (dir - 90).toFixed(0) + "deg)";
+  // var dir = spt.getQiblaDirection(lat, lng);
+  // $("qibla").style.transform = "rotate(" + (dir - 90).toFixed(0) + "deg)";
 }
 
 // make a table row
 function makeTableRow(data, item, key) {
   var row = document.createElement("tr");
-  var cellClass;
+  // var cellClass;
 
-  switch (key) {
-    case "suhail":
-    case "nawruz":
-    case "anwaa":
-    case "mawasem":
-    case "truezodiac":
-    case "standardzodiac":
-      cellClass = "season";
-      break;
-    case "shadow":
-    case "dhuhrshadow":
-    case "fadasrshadow":
-    case "asrshadow":
-      cellClass = "shadow";
-      break;
-    default:
-      cellClass = "";
-  }
+  // switch (key) {
+  //   case "suhail":
+  //   case "nawruz":
+  //   case "anwaa":
+  //   case "mawasem":
+  //   case "truezodiac":
+  //   case "standardzodiac":
+  //     cellClass = "season";
+  //     break;
+  //   case "shadow":
+  //   case "dhuhrshadow":
+  //   case "fadasrshadow":
+  //   case "asrshadow":
+  //     cellClass = "shadow";
+  //     break;
+  //   default:
+  //     cellClass = "";
+  // }
 
   var cell = document.createElement("td");
   cell.innerHTML = item;
@@ -151,7 +153,7 @@ function makeTableRow(data, item, key) {
   cell.innerHTML = data;
   row.appendChild(cell);
 
-  row.className = cellClass;
+  // row.className = cellClass;
   return row;
 }
 
