@@ -54,7 +54,7 @@ function makeTable(year, month, lat, lng, timeZone, dst, dstDates) {
     frenchdayname: "اسم اليوم الفرنسي",
     persiandayname: "اسم اليوم الفارسي",
     qiblatime: "وقت الشمس باتجاه القبلة",
-    dhuhr: "وفت الزوال",
+    dhuhr: "وقت الزوال",
     sunaltitude: "غاية ارتفاع الشمس",
     shadow: "طول واتجاه الظل ظهرا",
     dhuhrshadow: "ظل الظهر",
