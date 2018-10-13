@@ -1,4 +1,4 @@
-html {
+/* html {
   font-size: 1rem;
 }
 
@@ -6,7 +6,7 @@ html {
   html {
     font-size: 2rem;
   }
-}
+} */
 
 body,
 tr,
@@ -34,13 +34,6 @@ td {
   text-align: right;
 }
 
-.caption {
-  font-size: 20px;
-  color: #17a2b8;
-  text-align: center;
-  width: 6em;
-}
-
 .head-row {
   color: #fff;
   background-color: #343a40;
@@ -50,6 +43,12 @@ td {
 .today-row {
   background-color: #eed;
   color: #17a2b8;
+}
+
+#city {
+  background-color: #f0f9ff;
+  font-size: 1.4em;
+  height: 100px;
 }
 
 /* .compass {

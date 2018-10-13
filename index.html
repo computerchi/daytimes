@@ -35,12 +35,11 @@
 						<td id="maghribval">6:16</td>
 					</tr>
 				</table>
-
-				<select class="form-control form-control-lg" id="city" onchange="cityChange()"></select>
-
-			</div>
-			<div class="card-footer text-muted">
-				<p id="cityName" class="display-2">عجمان</p>
+				<div class="container">
+					<h1>
+						<select class="form-control form-control-lg" id="city" onchange="cityChange()"></select>
+					</h1>
+				</div>
 			</div>
 		</div>
 
@@ -97,7 +96,7 @@
 
 			function cityChange() {
 				var i = 1 * $('city').value;
-				$("cityName").innerHTML = cityParams[i][0];
+				// $("cityName").innerHTML = cityParams[i][0];
 
 				update(cityParams[i][1], cityParams[i][2], cityParams[i][3], cityParams[i][4]);
 			}
