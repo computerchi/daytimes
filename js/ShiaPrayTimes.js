@@ -53,6 +53,7 @@ class ShiaPrayTimes {
 
     // the values are not important, just a place holder
     var goodTimes = {
+      day: "Day",
       daysequence: "*",
       suhail: "Suhail",
       nawruz: "Nawruz",
