@@ -44,15 +44,16 @@ function makeTable(year, month, lat, lng, timeZone, dst, dstDates) {
   };
 
   var dateItems = {
-    day: "تاريخ",
     daysequence: " تسلسل اليوم في السنة",
     date: "التاريخ الميلادي",
     hijridate: "التاريخ الهجري",
-    juliandate: "التاريخ اليولياني",
     arabicdayname: "اسم اليوم العربي",
     dayname: " اسم اليوم الانجليزي",
     frenchdayname: "اسم اليوم الفرنسي",
-    persiandayname: "اسم اليوم الفارسي",
+    persiandayname: "اسم اليوم الفارسي"
+  };
+
+  var sunItems = {
     qiblatime: "وقت الشمس باتجاه القبلة",
     dhuhr: "وقت الزوال",
     sunaltitude: "غاية ارتفاع الشمس",
@@ -106,6 +107,15 @@ function makeTable(year, month, lat, lng, timeZone, dst, dstDates) {
     }
     removeAllChild($("datetable"));
     $("datetable").appendChild(tbody);
+  }
+
+  {
+    let tbody = document.createElement("tbody");
+    for (let z in sunItems) {
+      tbody.appendChild(makeTableRow(times[z], sunItems[z], z));
+    }
+    removeAllChild($("suntable"));
+    $("suntable").appendChild(tbody);
   }
 
   {

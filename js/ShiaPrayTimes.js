@@ -47,13 +47,12 @@ class ShiaPrayTimes {
     this.daySequence = this.getDaySequence();
     this.dst = this.isDaylightSavingsTime(dstType, dstDates);
 
-    if (date.getDate() == 1) {
+    if (this.qiblaDirection == undefined) {
       this.qiblaDirection = this.getQiblaDirection(lat, lng);
     }
 
     // the values are not important, just a place holder
     var goodTimes = {
-      day: "Day",
       daysequence: "*",
       suhail: "Suhail",
       nawruz: "Nawruz",
@@ -61,7 +60,6 @@ class ShiaPrayTimes {
       mawasem: "Mawasem",
       date: "Date",
       hijridate: "Hijri Date",
-      juliandate: "Julian Date",
       dayname: "Day Name",
       frenchdayname: "French Day Name",
       persiandayname: "Persian Day Name",
@@ -178,6 +176,7 @@ class ShiaPrayTimes {
     goodTimes.fadilatasr = this.getAsrTime(2 / 7, goodTimes.asr);
     goodTimes.endfadilatduhr = this.getAsrTime(4 / 7, goodTimes.asr);
     goodTimes.endfadilatasr = this.getAsrTime(6 / 7, goodTimes.asr);
+    goodTimes.qiblatime = this.qiblaTime(goodTimes.dhuhr);
     goodTimes.sunaltitude = this.getSunAltitude(goodTimes.dhuhr);
     goodTimes.shadow = Math.abs(
       1 / Math.tan(parseFloat(goodTimes.sunaltitude) * (Math.PI / 180))
@@ -185,7 +184,6 @@ class ShiaPrayTimes {
     goodTimes.dhuhrshadow = (goodTimes.shadow + 4 / 7).toFixed(2);
     goodTimes.fadasrshadow = (goodTimes.shadow + 2 / 7).toFixed(2);
     goodTimes.asrshadow = (goodTimes.shadow + 1).toFixed(2);
-    goodTimes.qiblatime = this.qiblaTime(goodTimes.dhuhr);
     goodTimes.shadow =
       goodTimes.sunaltitude.indexOf("N") > 0
         ? (
@@ -210,13 +208,13 @@ class ShiaPrayTimes {
   // Ref: Mohammed Shawkat Oudeh
   gregorianFromJulian(jd) {
     let l = jd + 68569;
-    let n = Math.floor((4 * l) / 146097);
-    l = l - Math.floor((146097 * n + 3) / 4);
-    let i = Math.floor((4000 * (l + 1)) / 1461001);
-    l = l - Math.floor((1461 * i) / 4 + 31);
-    let j = Math.floor((80 * l) / 2447);
-    let day = l - Math.floor((2447 * j) / 80);
-    l = Math.floor(j / 11);
+    let n = Math.round((4 * l) / 146097);
+    l = l - Math.round((146097 * n + 3) / 4);
+    let i = Math.round((4000 * (l + 1)) / 1461001);
+    l = l - Math.round((1461 * i) / 4 + 31);
+    let j = Math.round((80 * l) / 2447);
+    let day = l - Math.round((2447 * j) / 80);
+    l = Math.round(j / 11);
     let month = i + 2 - 12 * l;
     let year = 100 * (n - 49) + i + l;
 
@@ -232,30 +230,30 @@ class ShiaPrayTimes {
   // convert Julian day to Hijri date
   // Ref: Mohammed Shawkat Oudeh
   hijriFromJulian(jd) {
-    let l = Math.floor(jd) - 1948440 + 10632;
-    let n = Math.floor((l - 1) / 10631);
+    let l = Math.round(jd) - 1948440 + 10632;
+    let n = Math.round((l - 1) / 10631);
     l = l - 10631 * n + 354;
     let j =
-      Math.floor((10985 - l) / 5316) * Math.floor((50 * l) / 17719) +
-      Math.floor(l / 5670) * Math.floor((43 * l) / 15238);
+      Math.round((10985 - l) / 5316) * Math.round((50 * l) / 17719) +
+      Math.round(l / 5670) * Math.round((43 * l) / 15238);
     l =
       l -
-      Math.floor((30 - j) / 15) * Math.floor((17719 * j) / 50) -
-      Math.floor(j / 16) * Math.floor((15238 * j) / 43) +
+      Math.round((30 - j) / 15) * Math.round((17719 * j) / 50) -
+      Math.round(j / 16) * Math.round((15238 * j) / 43) +
       29;
-    let month = Math.floor((24 * l) / 709);
-    let day = l - Math.floor((709 * month) / 24);
-    let year = Math.floor(30 * n + j - 30);
+    let month = Math.round((24 * l) / 709);
+    let day = l - Math.round((709 * month) / 24);
+    let year = Math.round(30 * n + j - 30);
 
     return { year, month, day };
   }
 
   julianFromHijri(year, month, day) {
     return (
-      Math.floor((11 * year + 3) / 30) +
-      Math.floor(354 * year) +
-      Math.floor(30 * month) -
-      Math.floor((month - 1) / 2) +
+      Math.round((11 * year + 3) / 30) +
+      Math.round(354 * year) +
+      Math.round(30 * month) -
+      Math.round((month - 1) / 2) +
       day +
       1948440 -
       385
