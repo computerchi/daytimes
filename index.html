@@ -50,40 +50,79 @@
 		</div> -->
 
 		<div class="card text-center border-info mt-3">
-			<div class="card-header text-white bg-info mb-3">
+			<div class="card-header text-white bg-info mb-3" onclick="hideShow('hijriPanel')">
+				<h2 class="text-center display-2">مناسبات هجرية</h2>
+			</div>
+			<div class="card-body" id="hijriPanel">
+				<table id="hijriTable" class="table">
+					<tbody></tbody>
+					<p class="h1">ذكر المناسبات الهجرية هنا</p>
+					<p>Hello</p>
+					<p>Hello</p>
+				</table>
+			</div>
+		</div>
+		<div class="card text-center border-info mt-3">
+			<div class="card-header text-white bg-info mb-3" onclick="hideShow('meladiPanel')">
+				<h2 class="text-center display-2">مناسبات ميلادية</h2>
+			</div>
+			<div class="card-body" id="meladiPanel">
+				<table id="meladiTable" class="table">
+					<tbody></tbody>
+					<p class="h1">ذكر المناسبات الميلادية هنا</p>
+					<p>Hello</p>
+					<p>Hello</p>
+				</table>
+			</div>
+		</div>
+		<div class="card text-center border-info mt-3">
+			<div class="card-header text-white bg-info mb-3" onclick="hideShow('aamalPanel')">
+				<h2 class="text-center display-2">أعمال وعبادات</h2>
+			</div>
+			<div class="card-body" id="aamalPanel">
+				<table id="testTable" class="table">
+					<tbody></tbody>
+					<p class="h1">ذكر الأدعية والأعمال العبادية هنا</p>
+					<p>Hello</p>
+					<p>Hello</p>
+				</table>
+			</div>
+		</div>
+		<div class="card text-center border-info mt-3">
+			<div class="card-header text-white bg-info mb-3" onclick="hideShow('mawaqPanel')">
 				<h2 class="text-center display-2">مواقيت</h2>
 			</div>
-			<div class="card-body">
+			<div class="card-body" id="mawaqPanel">
 				<table id="timetable" class="table">
 					<tbody></tbody>
 				</table>
 			</div>
 		</div>
 		<div class="card text-center border-info mt-3">
-			<div class="card-header text-white bg-info mb-3">
+			<div class="card-header text-white bg-info mb-3" onclick="hideShow('tawarPanel')">
 				<h2 class="text-center display-2">تواريخ</h2>
 			</div>
-			<div class="card-body">
+			<div class="card-body" id="tawarPanel">
 				<table id="datetable" class="table">
 					<tbody></tbody>
 				</table>
 			</div>
 		</div>
 		<div class="card text-center border-info mt-3 mb-3">
-			<div class="card-header text-white bg-info mb-3">
+			<div class="card-header text-white bg-info mb-3" onclick="hideShow('shamsPanel')">
 				<h2 class="text-center display-2">الشمس</h2>
 			</div>
-			<div class="card-body">
+			<div class="card-body" id="shamsPanel">
 				<table id="suntable" class="table">
 					<tbody></tbody>
 				</table>
 			</div>
 		</div>
 		<div class="card text-center border-info mt-3 mb-3">
-			<div class="card-header text-white bg-info mb-3">
+			<div class="card-header text-white bg-info mb-3" onclick="hideShow('mawasPanel')">
 				<h2 class="text-center display-2">مواسم</h2>
 			</div>
-			<div class="card-body">
+			<div class="card-body" id="mawasPanel">
 				<table id="seasontable" class="table">
 					<tbody></tbody>
 				</table>
@@ -92,6 +131,33 @@
 		<script type="text/javascript">
 			var currentDate = new Date();
 			var timeFormat = 1;
+
+			// show & hide mechanism for the info panels
+			{
+				var keeper = {
+					hijriPanel: false,
+					meladiPanel: false,
+					aamalPanel: false,
+					mawaqPanel: false,
+					tawarPanel: false,
+					shamsPanel: false,
+					mawasPanel: false
+				};
+
+				for (let i in keeper) {
+					hideShow(false);
+				}
+
+				function hideShow(id) {
+					//					let state = !keeper[id];
+					for (let i in keeper) {
+						document.getElementById(i).hidden = i !== id;
+						console.log(i);
+					}
+
+					//					keeper[id] = state;
+				}
+			}
 
 			//Load the city drop-down list
 			var cityList = $('city');
