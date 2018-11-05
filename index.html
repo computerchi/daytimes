@@ -44,13 +44,7 @@
 			</div>
 		</div>
 
-		<!-- <div id="qibla" class="compass">
-			<p>
-				&#x279C;
-			</p>
-		</div> -->
-
-		<div class="card text-center border-info mt-3">
+		<!-- <div class="card text-center border-info mt-3">
 			<div class="card-header text-white bg-info mb-3" onclick="hideShow('hijriPanel')">
 				<h2 class="text-center display-2">مناسبات هجرية</h2>
 			</div>
@@ -90,7 +84,7 @@
 					<p>Hello</p>
 				</table>
 			</div>
-		</div>
+		</div> -->
 
 		<div class="card text-center border-info mt-3">
 			<div class="card-header text-white bg-info mb-3" onclick="hideShow('mawaqPanel')">
@@ -154,9 +148,9 @@
 			// show & hide mechanism for the info panels
 			{
 				var keeper = {
-					hijriPanel: false,
-					meladiPanel: false,
-					aamalPanel: false,
+					// hijriPanel: false,
+					// meladiPanel: false,
+					// aamalPanel: false,
 					sharafPanel: false,
 					mawaqPanel: false,
 					tawarPanel: false,
@@ -172,7 +166,6 @@
 					//					let state = !keeper[id];
 					for (let i in keeper) {
 						document.getElementById(i).hidden = i !== id;
-						console.log(i);
 					}
 
 					//					keeper[id] = state;
@@ -192,8 +185,6 @@
 
 			function cityChange() {
 				var i = 1 * $('city').value;
-				// $("cityName").innerHTML = cityParams[i][0];
-
 				update(cityParams[i][1], cityParams[i][2], cityParams[i][3], cityParams[i][4]);
 			}
 		</script>

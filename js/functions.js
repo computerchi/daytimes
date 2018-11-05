@@ -13,6 +13,16 @@ var monthName = [
   ["December", "ديسمبر", "كانون الأول"]
 ];
 
+var arabicDayNames = [
+  "الأحد",
+  "الإثنين",
+  "الثلاثاء",
+  "الأربعاء",
+  "الخميس",
+  "الجمعة",
+  "السبت"
+];
+
 // display monthly timetable
 function update(lat, lng, timeZone, dst) {
   var month = currentDate.getMonth();
@@ -128,9 +138,6 @@ function makeTable(year, month, lat, lng, timeZone, dst, dstDates) {
     removeAllChild($("seasontable"));
     $("seasontable").appendChild(tbody);
   }
-
-  // var dir = spt.getQiblaDirection(lat, lng);
-  // $("qibla").style.transform = "rotate(" + (dir - 90).toFixed(0) + "deg)";
 }
 
 function makeSharafTable(year, tz) {
@@ -146,29 +153,26 @@ function makeSharafTable(year, tz) {
     thanab: "شرف الذنب"
   };
 
-  var sharafIndex = (Number(year) - 2010 + 1) * 9;
+  var sharafIndex = (Number(year) - 2010) * 9;
   {
     let tbody = document.createElement("tbody");
     for (let z in items) {
       let d = new Date(
         sharafData[sharafIndex][3],
-        sharafData[sharafIndex][2],
+        sharafData[sharafIndex][2] - 1,
         sharafData[sharafIndex][1],
-        Number(sharafData[sharafIndex][4].slice(0, 2)) + tz,
-        sharafData[sharafIndex][4].slice(3),
+        parseInt(sharafData[sharafIndex][4].slice(0, 2)) + tz,
+        parseInt(sharafData[sharafIndex][4].slice(3)),
         0,
         0
       );
-      let date = `${sharafData[sharafIndex][3]}-${sharafData[sharafIndex][2]}-${
-        sharafData[sharafIndex][1]
-      }`;
+      let day = arabicDayNames[d.getDay()];
+      let date = `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
       let time = `${addZero(d.getHours())}:${addZero(d.getMinutes())}`;
-      tbody.appendChild(makeSharafTableRow(items[z], date, time));
+      tbody.appendChild(makeSharafTableRow(items[z], day, date, time));
       sharafIndex++;
     }
     let sharafTable = $("sharaftable");
-    console.log(sharafTable);
-
     removeAllChild(sharafTable);
     sharafTable.appendChild(tbody);
   }
@@ -177,26 +181,6 @@ function makeSharafTable(year, tz) {
 // make a table row
 function makeTableRow(data, item, key) {
   var row = document.createElement("tr");
-  // var cellClass;
-
-  // switch (key) {
-  //   case "suhail":
-  //   case "nawruz":
-  //   case "anwaa":
-  //   case "mawasem":
-  //   case "truezodiac":
-  //   case "standardzodiac":
-  //     cellClass = "season";
-  //     break;
-  //   case "shadow":
-  //   case "dhuhrshadow":
-  //   case "fadasrshadow":
-  //   case "asrshadow":
-  //     cellClass = "shadow";
-  //     break;
-  //   default:
-  //     cellClass = "";
-  // }
 
   var cell = document.createElement("td");
   cell.innerHTML = item;
@@ -206,15 +190,18 @@ function makeTableRow(data, item, key) {
   cell.innerHTML = data;
   row.appendChild(cell);
 
-  // row.className = cellClass;
   return row;
 }
 
-function makeSharafTableRow(item, date, time) {
+function makeSharafTableRow(item, day, date, time) {
   var row = document.createElement("tr");
 
   var cell = document.createElement("td");
   cell.innerHTML = item;
+  row.appendChild(cell);
+
+  cell = document.createElement("td");
+  cell.innerHTML = day;
   row.appendChild(cell);
 
   cell = document.createElement("td");
@@ -223,8 +210,8 @@ function makeSharafTableRow(item, date, time) {
 
   cell = document.createElement("td");
   cell.innerHTML = time;
-
   row.appendChild(cell);
+
   return row;
 }
 
