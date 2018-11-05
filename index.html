@@ -4,8 +4,12 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 	<title>Day Times</title>
+	<script type="text/javascript" src="./js/events.js"></script>
 	<script type="text/javascript" src="./js/sharaf.js"></script>
 	<script type="text/javascript" src="./js/cityFile.js"></script>
+	<script type="text/javascript" src="./js/calendarTool.js"></script>
+	<script type="text/javascript" src="./js/jewishCalendar.js"></script>
+	<script type="text/javascript" src="./js/cobticCalendar.js"></script>
 	<script type="text/javascript" src="./js/PrayTimes.js"></script>
 	<script type="text/javascript" src="./js/ShiaPrayTimes.js"></script>
 	<script type="text/javascript" src="./js/functions.js"></script>
@@ -13,38 +17,49 @@
 	<link rel="stylesheet" type="text/css" href="./css/styles.css">
 </head>
 
+
+
+
 <body>
 	<div class="container">
+		<div class="row">
+			<div class="col">
 
-		<div class="card border-primary text-center mt-3">
-			<div class="card-header text-white bg-primary mb-3">
-				<h1 class="display-1">
-					<p id="dayName">Wed</p>
-					<p id="dayDate">2018-6-20</p>
-				</h1>
-			</div>
-			<div class="card-body">
-				<table class="table">
-					<tr>
-						<td>صلاة الفجر</td>
-						<td>صلاة الظهر</td>
-						<td>صلاة المغرب</td>
-					</tr>
-					<tr>
-						<td id="fajrval">6:15</td>
-						<td id="dhuhrval">12:15</td>
-						<td id="maghribval">6:16</td>
-					</tr>
-				</table>
-				<div class="container">
-					<h1>
-						<select class="form-control form-control-lg" id="city" onchange="cityChange()"></select>
-					</h1>
+				<div class="card border-primary text-center mt-3">
+					<div class="card-header text-white my-bg-primary mb-3">
+						<h1 class="display-3">
+							<p id="dayName">Wed</p>
+							<p id="dayDate">2018-6-20</p>
+						</h1>
+					</div>
+					<div class="card-body">
+						<table class="table">
+							<tr>
+								<td>صلاة الصبح</td>
+								<td>صلاة الظهر</td>
+								<td>صلاة المغرب</td>
+							</tr>
+							<tr>
+								<td id="fajrval">6:15</td>
+								<td id="dhuhrval">12:15</td>
+								<td id="maghribval">6:16</td>
+							</tr>
+						</table>
+						<div class="container">
+							<h1>
+								<select class="form-control form-control-lg" id="city" onchange="cityChange()"></select>
+							</h1>
+						</div>
+					</div>
+					<div class="card-footer">
+						<p id="eventsToday"></p>
+					</div>
 				</div>
-			</div>
-		</div>
 
-		<!-- <div class="card text-center border-info mt-3">
+			</div>
+			<div class="col">
+
+				<!-- <div class="card text-center border-info mt-3">
 			<div class="card-header text-white bg-info mb-3" onclick="hideShow('hijriPanel')">
 				<h2 class="text-center display-2">مناسبات هجرية</h2>
 			</div>
@@ -86,109 +101,113 @@
 			</div>
 		</div> -->
 
-		<div class="card text-center border-info mt-3">
-			<div class="card-header text-white bg-info mb-3" onclick="hideShow('mawaqPanel')">
-				<h2 class="text-center display-2">مواقيت</h2>
-			</div>
-			<div class="card-body" id="mawaqPanel">
-				<table id="timetable" class="table">
-					<tbody></tbody>
-				</table>
+				<div class="card text-center border-info mt-3">
+					<div class="card-header text-white my-bg-info mb-3" onclick="hideShow('mawaqPanel')">
+						<h2 class="text-center h1">مواقيت</h2>
+					</div>
+					<div class="card-body" id="mawaqPanel">
+						<table id="timetable" class="table">
+							<tbody></tbody>
+						</table>
+					</div>
+				</div>
+
+				<div class="card text-center border-info mt-3">
+					<div class="card-header text-white my-bg-info mb-3" onclick="hideShow('tawarPanel')">
+						<h2 class="text-center h1">تواريخ</h2>
+					</div>
+					<div class="card-body" id="tawarPanel">
+						<table id="datetable" class="table">
+							<tbody></tbody>
+						</table>
+					</div>
+				</div>
+
+				<div class="card text-center border-info mt-3 mb-3">
+					<div class="card-header text-white my-bg-info mb-3" onclick="hideShow('shamsPanel')">
+						<h2 class="text-center h1">الشمس</h2>
+					</div>
+					<div class="card-body" id="shamsPanel">
+						<table id="suntable" class="table">
+							<tbody></tbody>
+						</table>
+					</div>
+				</div>
+
+				<div class="card text-center border-info mt-3 mb-3">
+					<div class="card-header text-white my-bg-info mb-3" onclick="hideShow('mawasPanel')">
+						<h2 class="text-center h1">مواسم</h2>
+					</div>
+					<div class="card-body" id="mawasPanel">
+						<table id="seasontable" class="table">
+							<tbody></tbody>
+						</table>
+					</div>
+				</div>
+
+				<div class="card text-center border-info my-3">
+					<div class="card-header text-white my-bg-info mb-3" onclick="hideShow('sharafPanel')">
+						<h2 class="text-center h1">شرف الكواكب</h2>
+					</div>
+					<div class="card-body" id="sharafPanel">
+						<table id="sharaftable" class="table">
+							<tbody></tbody>
+						</table>
+					</div>
+				</div>
+
 			</div>
 		</div>
-
-		<div class="card text-center border-info mt-3">
-			<div class="card-header text-white bg-info mb-3" onclick="hideShow('tawarPanel')">
-				<h2 class="text-center display-2">تواريخ</h2>
-			</div>
-			<div class="card-body" id="tawarPanel">
-				<table id="datetable" class="table">
-					<tbody></tbody>
-				</table>
-			</div>
-		</div>
-
-		<div class="card text-center border-info mt-3 mb-3">
-			<div class="card-header text-white bg-info mb-3" onclick="hideShow('shamsPanel')">
-				<h2 class="text-center display-2">الشمس</h2>
-			</div>
-			<div class="card-body" id="shamsPanel">
-				<table id="suntable" class="table">
-					<tbody></tbody>
-				</table>
-			</div>
-		</div>
-
-		<div class="card text-center border-info mt-3 mb-3">
-			<div class="card-header text-white bg-info mb-3" onclick="hideShow('mawasPanel')">
-				<h2 class="text-center display-2">مواسم</h2>
-			</div>
-			<div class="card-body" id="mawasPanel">
-				<table id="seasontable" class="table">
-					<tbody></tbody>
-				</table>
-			</div>
-		</div>
-
-		<div class="card text-center border-info my-3">
-			<div class="card-header text-white bg-info mb-3" onclick="hideShow('sharafPanel')">
-				<h2 class="text-center display-2">شرف الكواكب</h2>
-			</div>
-			<div class="card-body" id="sharafPanel">
-				<table id="sharaftable" class="table">
-					<tbody></tbody>
-				</table>
-			</div>
-		</div>
-
-		<script type="text/javascript">
-			var currentDate = new Date();
-			var timeFormat = 1;
-
-			// show & hide mechanism for the info panels
-			{
-				var keeper = {
-					// hijriPanel: false,
-					// meladiPanel: false,
-					// aamalPanel: false,
-					sharafPanel: false,
-					mawaqPanel: false,
-					tawarPanel: false,
-					shamsPanel: false,
-					mawasPanel: false
-				};
-
-				for (let i in keeper) {
-					hideShow(false);
-				}
-
-				function hideShow(id) {
-					//					let state = !keeper[id];
-					for (let i in keeper) {
-						document.getElementById(i).hidden = i !== id;
-					}
-
-					//					keeper[id] = state;
-				}
-			}
-
-			//Load the city drop-down list
-			var cityList = $('city');
-			for (var i = 0; i < cityParams.length; i++) {
-				var newCity = document.createElement('option');
-				newCity.text = cityParams[i][0];
-				newCity.value = i;
-				cityList.add(newCity);
-			}
-
-			update(25.4105522, 55.5022193, 4, 8); //Ajman
-
-			function cityChange() {
-				var i = 1 * $('city').value;
-				update(cityParams[i][1], cityParams[i][2], cityParams[i][3], cityParams[i][4]);
-			}
-		</script>
 	</div>
+
+
+	<script type="text/javascript">
+		var currentDate = new Date();
+		var timeFormat = 1;
+
+		// show & hide mechanism for the info panels
+		{
+			var keeper = {
+				// hijriPanel: false,
+				// meladiPanel: false,
+				// aamalPanel: false,
+				sharafPanel: false,
+				mawaqPanel: false,
+				tawarPanel: false,
+				shamsPanel: false,
+				mawasPanel: false
+			};
+
+			for (let i in keeper) {
+				hideShow(false);
+			}
+
+			function hideShow(id) {
+				//					let state = !keeper[id];
+				for (let i in keeper) {
+					document.getElementById(i).hidden = i !== id;
+				}
+
+				//					keeper[id] = state;
+			}
+		}
+
+		//Load the city drop-down list
+		var cityList = $('city');
+		for (var i = 0; i < cityParams.length; i++) {
+			var newCity = document.createElement('option');
+			newCity.text = cityParams[i][0];
+			newCity.value = i;
+			cityList.add(newCity);
+		}
+
+		update(25.4105522, 55.5022193, 4, 8); //Ajman
+
+		function cityChange() {
+			var i = 1 * $('city').value;
+			update(cityParams[i][1], cityParams[i][2], cityParams[i][3], cityParams[i][4]);
+		}
+	</script>
 </body>
 
 </html>

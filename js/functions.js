@@ -138,6 +138,8 @@ function makeTable(year, month, lat, lng, timeZone, dst, dstDates) {
     removeAllChild($("seasontable"));
     $("seasontable").appendChild(tbody);
   }
+
+  showEventsToday(times.hijriday, times.hijrimonth);
 }
 
 function makeSharafTable(year, tz) {
@@ -231,4 +233,21 @@ function addZero(i) {
     i = "0" + i;
   }
   return i;
+}
+
+function showEventsToday(hijriDay, hijriMonth) {
+  var myItem = eventsData.find(
+    item => item[0] === Number(hijriDay) && item[1] === Number(hijriMonth)
+  );
+
+  if (myItem != undefined) {
+    var i = eventsData.indexOf(myItem);
+    var eventsToday = "<ul>";
+    for (; eventsData[i][0] === Number(hijriDay); i++) {
+      eventsToday += `<li>${eventsData[i][2]}</li>`;
+    }
+  } else {
+    var eventsToday = `لا يوجد أحداث أو مناسبات`;
+  }
+  $("eventsToday").innerHTML = eventsToday;
 }

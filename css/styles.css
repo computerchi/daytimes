@@ -8,15 +8,24 @@ form {
   direction: rtl;
 }
 
+.my-bg-primary {
+  background-color: #00457ebb;
+}
+
+.my-bg-info {
+  background-color: #6d5f23c0;
+}
+
 td {
-  font-size: 2.5rem;
+  font-size: 1.4rem;
 }
 
 #timetable,
 #datetable,
 #suntable,
 #seasontable,
-#sharaftable {
+#sharaftable,
+#eventsToday {
   text-align: right;
 }
 

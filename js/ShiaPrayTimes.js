@@ -1,15 +1,16 @@
-//
-//	ShiaPrayTimes.js
-//	Developed by Ali Mahdi, ©2018
-//	This library is wrapper class for the PrayTimes.org library.
-//	This class uses and encapsulates the PrayTimes object but
-//	does not make any changes to the original object.
-//	The app that uses this library must also load up the PrayTimes.org library.
-//	The calculation code found in here is also based on code translated from BASIC
-//	By Eng. Mohammed Ali Alsaegh.
-//
+//import CalendarTool from "../lib/calendarTool";
 
-"use strict";
+/**
+ * ShiaPrayTimes.js
+ *	Developed by Ali Mahdi, ©2018
+ *	This library is wrapper class for the PrayTimes.org library.
+ *	This class uses and encapsulates the PrayTimes object but
+ *	does not make any changes to the original object.
+ *	The app that uses this library must also load up the PrayTimes.org library.
+ *	In addition to calculations based on code by Eng. Mohammed Ali Alsaegh, translated from BASIC.
+ */
+
+("use strict");
 
 class ShiaPrayTimes {
   constructor() {
@@ -19,8 +20,12 @@ class ShiaPrayTimes {
       fajr: 18,
       dhuhr: 0,
       maghrib: "15 min",
-      isha: 14
+      isha: 17.5
     });
+
+    // this.testEaster();
+    this.persianCal = new CalendarTool(2018, 10, 15);
+    this.cobticCal = new CobticCalendar();
   }
 
   times(date, lat, lng, timeZone, format, dstType, dstDates) {
@@ -35,7 +40,12 @@ class ShiaPrayTimes {
     this.date = new Date(date);
     this.longitude = lng;
     this.latitude = lat;
-    this.julianDate = this.julianFromGregorian(
+    this.julianDay = this.julianDayFromGregorian(
+      date.getFullYear(),
+      date.getMonth() + 1,
+      date.getDate()
+    );
+    this.persianCal.setGregorianDate(
       date.getFullYear(),
       date.getMonth() + 1,
       date.getDate()
@@ -53,43 +63,15 @@ class ShiaPrayTimes {
 
     // the values are not important, just a place holder
     var goodTimes = {
-      day: "Day",
-      daysequence: "*",
-      suhail: "Suhail",
-      nawruz: "Nawruz",
-      anwaa: "Anwaa",
-      mawasem: "Mawasem",
-      date: "Date",
-      hijridate: "Hijri Date",
-      dayname: "Day Name",
-      frenchdayname: "French Day Name",
-      persiandayname: "Persian Day Name",
-      arabicdayname: "Arabic Day Name",
-      sahar: "Sahar",
       imsak: "Imsak",
       fajr: "Athanul Fajr",
-      subh: "Salatus Subh",
-      endfadilatsubh: "End of Fadilatul Subh",
       sunrise: "Sunrise",
-      qiblatime: "Qibla Time",
-      samtulqiblatime: "Samtul Qibla Time",
       dhuhr: "Noon",
-      sunaltitude: "Sun Altitude",
-      shadow: "Shadow",
-      athandhuhr: 0,
-      dhuhrshadow: "Dhuhr Shadow",
-      fadilatasr: "Beginning Fadilatul Asr",
-      fadasrshadow: "Fadilatul Asr Shadow",
-      endfadilatduhr: "End Fadilatul Duhr",
-      endfadilatasr: "End Fadilatul Asr",
       asr: "Asr",
-      asrshadow: "Asr Shadow",
       sunset: "Sunset",
       maghrib: "Athanul Maghrib",
       isha: "Isha",
-      midnight: "Midnight",
-      truezodiac: "True Zodiac",
-      standardzodiac: "Standard Zodiac"
+      midnight: "Midnight"
     };
 
     var dayNames = [
@@ -129,6 +111,91 @@ class ShiaPrayTimes {
       "السبت"
     ];
 
+    var kurdiDayNames = [
+      "یه‌كشه‌ممه‌",
+      "دووشه‌ممه‌",
+      "سێشه‌ممه‌",
+      "چوارشه‌ممه‌",
+      "پێنجشه‌مه‌",
+      "هه‌ینی",
+      "شه‌ممه‌"
+    ];
+
+    var englishMonthNames = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December"
+    ];
+
+    var frenchMonthNames = [
+      "janvier",
+      "février",
+      "mars",
+      "avril",
+      "mai",
+      "juin",
+      "juillet",
+      "aout",
+      "septembre",
+      "octobre",
+      "novembre",
+      "décembre"
+    ];
+
+    var westernMonthNames = [
+      "يناير",
+      "فبراير",
+      "مارس",
+      "إبريل",
+      "مايو",
+      "يونيو",
+      "يوليو",
+      "أغسطس",
+      "سبتمبر",
+      "أكتوبر",
+      "نوفمبر",
+      "ديسمبر"
+    ];
+
+    var easternMonthNames = [
+      "كانون الثاني",
+      "شباط",
+      "آذار",
+      "نيسان",
+      "آيار",
+      "حزيران",
+      "تموز",
+      "آب",
+      "أيلول",
+      "تشرين الأول",
+      "تشرين الثاني",
+      "كانون الأول"
+    ];
+
+    var kurdishMonthNames = [
+      "ئازار",
+      "نیسان",
+      "ئایار",
+      "حوزەیران",
+      "تەمموز",
+      "ئاب",
+      "ئەیلوول",
+      "تشرینی یەکەم",
+      "تشرینی دووەم",
+      "کانوونی یەکەم",
+      "کانوونی دووەم",
+      "شوبات"
+    ];
+
     // fill the goodTimes with the library times, and '-' the undefined ones
     for (var i in goodTimes) {
       if (libTimes[i] != null) {
@@ -142,29 +209,50 @@ class ShiaPrayTimes {
     goodTimes.athandhuhr = this.addMinutes(goodTimes.dhuhr, 2);
     goodTimes.daysequence = this.daySequence;
 
-    goodTimes.date = `${date.getFullYear()}-${Number(
+    goodTimes.date = `${date.getDate()}-${Number(
       date.getMonth() + 1
-    )}-${date.getDate()}`;
+    )}-${date.getFullYear()}`;
 
-    let hijriDate = this.hijriFromJulian(
-      this.julianFromGregorian(
+    goodTimes.arabicdayname = arabicDayNames[date.getDay()];
+    goodTimes.kurdidayname = kurdiDayNames[date.getDay()];
+
+    let hijriDate = this.hijriFromJulianDay(
+      this.julianDayFromGregorian(
         date.getFullYear(),
         date.getMonth() + 1,
         date.getDate()
       )
     );
 
-    goodTimes.hijridate = `
-      ${hijriDate.day}-
-      ${this.getHijriMonthName(hijriDate.month)}-
-      ${hijriDate.year}`;
-
-    goodTimes.juliandate = this.julianDate;
-
-    goodTimes.dayname = dayNames[date.getDay()];
+    goodTimes.hijridate = `${hijriDate.year}-${hijriDate.month}-${
+      hijriDate.day
+    }`;
+    goodTimes.hijrimonth = hijriDate.month;
+    goodTimes.hijrimonthname = this.getHijriMonthName(hijriDate.month);
+    goodTimes.hijrishort = `${hijriDate.day} ${goodTimes.hijrimonthname}`;
+    goodTimes.hijriday = `${hijriDate.day}`;
+    goodTimes.julianday = this.julianDay;
     goodTimes.persiandayname = farsiDayNames[date.getDay()];
+    goodTimes.persiandate = this.persianCal.iranianDate;
+    goodTimes.persianmonth = this.persianCal.iranianMonthName;
+    this.cobticCal.setGregorianDate(
+      date.getFullYear(),
+      date.getMonth() + 1,
+      date.getDate()
+    );
+    let cobticDate = this.cobticCal.date;
+    goodTimes.cobticdate = `${cobticDate.day}-${cobticDate.month}-${
+      cobticDate.year
+    }`;
+    goodTimes.cobticmonth = this.cobticCal.monthName;
+    goodTimes.juliandate = this.persianCal.julianDate;
+    goodTimes.dayname = dayNames[date.getDay()];
     goodTimes.frenchdayname = frenchDayNames[date.getDay()];
-    goodTimes.arabicdayname = arabicDayNames[date.getDay()];
+    goodTimes.englishmonthname = englishMonthNames[date.getMonth()];
+    goodTimes.frenchmonthname = frenchMonthNames[date.getMonth()];
+    goodTimes.westernmonthname = westernMonthNames[date.getMonth()];
+    goodTimes.easternmonthname = easternMonthNames[date.getMonth()];
+    goodTimes.kurdishmonthname = kurdishMonthNames[date.getMonth()];
     goodTimes.suhail = this.getSuhail();
     goodTimes.nawruz = this.getNawruz();
     goodTimes.anwaa = this.getAnwaa();
@@ -201,23 +289,39 @@ class ShiaPrayTimes {
     return goodTimes;
   }
 
-  julianFromGregorian(year, month, day) {
+  julianDayFromGregorian(year, month, day) {
     return this.prayTimes.julian(year, month, day);
   }
 
   // convert Julian day to Gregorian date
   // Ref: Mohammed Shawkat Oudeh
-  gregorianFromJulian(jd) {
+  gregorianFromJulianDay(jd) {
     let l = jd + 68569;
-    let n = Math.round((4 * l) / 146097);
-    l = l - Math.round((146097 * n + 3) / 4);
-    let i = Math.round((4000 * (l + 1)) / 1461001);
-    l = l - Math.round((1461 * i) / 4 + 31);
-    let j = Math.round((80 * l) / 2447);
-    let day = l - Math.round((2447 * j) / 80);
-    l = Math.round(j / 11);
-    let month = i + 2 - 12 * l;
+    let n = div(4 * l, 146097);
+    l = l - div(146097 * n + 3, 4);
+    let i = div(4000 * (l + 1), 1461001);
+    l = l - div(1461 * i, 4 + 31);
+    let j = div(80 * l, 2447);
+    let day = l - div(2447 * j, 80);
+    l = div(j, 11);
+    let month = ((i + 2 - 12 * l) % 12) + 1;
     let year = 100 * (n - 49) + i + l;
+
+    return { year, month, day };
+  }
+
+  julianDayFromJulianDate(year, month, day) {
+    this.persianCal.setJulianDate(year, month, day);
+    return this.persianCal.jdn;
+  }
+
+  julianDateFromJulianDay(jd) {
+    let j = 4 * jd + 139361631;
+    j = j + div(div(4 * jd + 183187720, 146097) * 3, 4) * 4 - 3908;
+    const i = div(j % 1461, 4) * 5 + 308;
+    let day = div(i % 153, 5) + 1;
+    let month = (div(i, 153) % 12) + 1;
+    let year = div(j, 1461) - 100100 + div(8 - month, 6);
 
     return { year, month, day };
   }
@@ -230,31 +334,31 @@ class ShiaPrayTimes {
 
   // convert Julian day to Hijri date
   // Ref: Mohammed Shawkat Oudeh
-  hijriFromJulian(jd) {
-    let l = Math.round(jd) - 1948440 + 10632;
-    let n = Math.round((l - 1) / 10631);
+  hijriFromJulianDay(jd) {
+    let l = Math.round(jd) - 1948440 + 10632; // Ali Mahdi: rounding jd brings it closer to existing clacs. Tested on 2018 only.
+    let n = div(l - 1, 10631);
     l = l - 10631 * n + 354;
     let j =
-      Math.round((10985 - l) / 5316) * Math.round((50 * l) / 17719) +
-      Math.round(l / 5670) * Math.round((43 * l) / 15238);
+      div(10985 - l, 5316) * div(50 * l, 17719) +
+      div(l, 5670) * div(43 * l, 15238);
     l =
       l -
-      Math.round((30 - j) / 15) * Math.round((17719 * j) / 50) -
-      Math.round(j / 16) * Math.round((15238 * j) / 43) +
+      div(30 - j, 15) * div(17719 * j, 50) -
+      div(j, 16) * div(15238 * j, 43) +
       29;
-    let month = Math.round((24 * l) / 709);
-    let day = l - Math.round((709 * month) / 24);
-    let year = Math.round(30 * n + j - 30);
+    let month = div(24 * l, 709);
+    let day = l - div(709 * month, 24);
+    let year = 30 * n + j - 30;
 
     return { year, month, day };
   }
 
-  julianFromHijri(year, month, day) {
+  julianDayFromHijri(year, month, day) {
     return (
-      Math.round((11 * year + 3) / 30) +
-      Math.round(354 * year) +
-      Math.round(30 * month) -
-      Math.round((month - 1) / 2) +
+      div(11 * year + 3, 30) +
+      354 * year +
+      30 * month -
+      div(month - 1, 2) +
       day +
       1948440 -
       385
@@ -266,7 +370,7 @@ class ShiaPrayTimes {
       "محرم",
       "صفر",
       "ربيع الاول",
-      "ربيع الثاني",
+      "ربيع الاخر",
       "جمادى الاولى",
       "جمادى الاخرة",
       "رجب",
@@ -278,6 +382,85 @@ class ShiaPrayTimes {
     ];
 
     return hijriMonthNames[month - 1];
+  }
+
+  /**
+   * Calculates Easter in the Gregorian calendar.
+   * @param  {any} year
+   * @return date object { year, month, day }
+   * @memberof ShiaPrayTimes
+   */
+  calcGregorianEaster(year) {
+    if (year >= 1583) {
+      const a = year % 19;
+      const b = div(year, 100);
+      const c = year % 100;
+      const d = div(b, 4);
+      const e = b % 4;
+      const f = div(b + 8, 25);
+      const g = div(b - f + 1, 3);
+      const h = (19 * a + b - d - g + 15) % 30;
+      const i = div(c, 4);
+      const k = c % 4;
+      const l = (32 + 2 * e + 2 * i - h - k) % 7;
+      const m = div(a + 11 * h + 22 * l, 451);
+      const r = h + l - 7 * m + 114;
+      const month = div(r, 31);
+      const day = (r % 31) + 1;
+      return { year, month, day };
+    } else {
+      const { month, day } = this.calcJulianEaster(year);
+
+      return { year, month, day };
+    }
+  }
+
+  calcJulianEaster(year) {
+    const a = year % 4;
+    const b = year % 7;
+    const c = year % 19;
+    const d = (19 * c + 15) % 30;
+    const e = (2 * a + 4 * b - d + 34) % 7;
+    const r = d + e + 144;
+    const month = div(r, 31) - 1;
+    const day = (r % 31) + 2;
+
+    const jdn = this.julianDayFromJulianDate(year, month, day);
+    const gDate = this.julianDateFromJulianDay(jdn);
+
+    return {
+      year,
+      month,
+      day,
+      jYear: gDate.year,
+      jMonth: gDate.month,
+      jDay: gDate.day
+    };
+  }
+
+  testEaster() {
+    let years = [
+      179,
+      711,
+      1243,
+      1234,
+      1582,
+      1583,
+      1818,
+      1978,
+      1979,
+      1980,
+      2000,
+      2285
+    ];
+
+    for (let i in years) {
+      let ge = this.calcGregorianEaster(years[i]);
+      console.log("Gregorian Easter ", ge.year, ge.month, ge.day);
+
+      let je = this.calcJulianEaster(years[i]);
+      console.log("Julian Easter ", je.year, je.month, je.day);
+    }
   }
 
   addMinutes(time, mins) {
@@ -298,16 +481,9 @@ class ShiaPrayTimes {
     var month = this.date.getMonth() + 1;
     var day = this.date.getDate();
     if (this.isLeapYear) {
-      return (
-        Math.floor((275 * month) / 9) - Math.floor((month + 9) / 12) + day - 30
-      );
+      return div(275 * month, 9) - div(month + 9, 12) + day - 30;
     } else {
-      return (
-        Math.floor((275 * month) / 9) -
-        2 * Math.floor((month + 9) / 12) +
-        day -
-        30
-      );
+      return div(275 * month, 9) - 2 * div(month + 9, 12) + day - 30;
     }
   }
 
@@ -645,7 +821,7 @@ class ShiaPrayTimes {
 
   getSunAltitude(timeStr) {
     var decl = this.prayTimes.sunPosition(
-      this.julianDate + this.timeStringToDayPortion(timeStr)
+      this.julianDay + this.timeStringToDayPortion(timeStr)
     ).declination;
 
     var dir = "S";
@@ -678,7 +854,7 @@ class ShiaPrayTimes {
     var COLAT = Math.PI / 2 - GP;
     var decl =
       (this.prayTimes.sunPosition(
-        this.julianDate + this.timeStringToDayPortion(timeStr)
+        this.julianDay + this.timeStringToDayPortion(timeStr)
       ).declination *
         Math.PI) /
       180;
@@ -847,4 +1023,9 @@ class ShiaPrayTimes {
 
     return false;
   }
+}
+
+// Utility functions for integer division
+function div(a, b) {
+  return ~~(a / b);
 }
