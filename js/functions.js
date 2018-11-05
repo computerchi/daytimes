@@ -20,6 +20,8 @@ function update(lat, lng, timeZone, dst) {
   var dstDates = [3, 1, 10, 1];
 
   makeTable(year, month, lat, lng, timeZone, dst, dstDates);
+
+  makeSharafTable(year, timeZone);
 }
 
 // make monthly timetable
@@ -131,6 +133,47 @@ function makeTable(year, month, lat, lng, timeZone, dst, dstDates) {
   // $("qibla").style.transform = "rotate(" + (dir - 90).toFixed(0) + "deg)";
 }
 
+function makeSharafTable(year, tz) {
+  var items = {
+    mars: "شرف المريخ",
+    venus: "شرف الزهرة",
+    sun: "شرف الشمس",
+    moon: "شرف القمر",
+    rami: "شرف الرامي",
+    jupiter: "شرف المشتري",
+    mercury: "شرف عطارد",
+    saturn: "شرف زحل",
+    thanab: "شرف الذنب"
+  };
+
+  var sharafIndex = (Number(year) - 2010 + 1) * 9;
+  {
+    let tbody = document.createElement("tbody");
+    for (let z in items) {
+      let d = new Date(
+        sharafData[sharafIndex][3],
+        sharafData[sharafIndex][2],
+        sharafData[sharafIndex][1],
+        Number(sharafData[sharafIndex][4].slice(0, 2)) + tz,
+        sharafData[sharafIndex][4].slice(3),
+        0,
+        0
+      );
+      let date = `${sharafData[sharafIndex][3]}-${sharafData[sharafIndex][2]}-${
+        sharafData[sharafIndex][1]
+      }`;
+      let time = `${addZero(d.getHours())}:${addZero(d.getMinutes())}`;
+      tbody.appendChild(makeSharafTableRow(items[z], date, time));
+      sharafIndex++;
+    }
+    let sharafTable = $("sharaftable");
+    console.log(sharafTable);
+
+    removeAllChild(sharafTable);
+    sharafTable.appendChild(tbody);
+  }
+}
+
 // make a table row
 function makeTableRow(data, item, key) {
   var row = document.createElement("tr");
@@ -167,6 +210,24 @@ function makeTableRow(data, item, key) {
   return row;
 }
 
+function makeSharafTableRow(item, date, time) {
+  var row = document.createElement("tr");
+
+  var cell = document.createElement("td");
+  cell.innerHTML = item;
+  row.appendChild(cell);
+
+  cell = document.createElement("td");
+  cell.innerHTML = date;
+  row.appendChild(cell);
+
+  cell = document.createElement("td");
+  cell.innerHTML = time;
+
+  row.appendChild(cell);
+  return row;
+}
+
 // remove all children of a node
 function removeAllChild(node) {
   if (node == undefined || node == null) return;
@@ -176,4 +237,11 @@ function removeAllChild(node) {
 
 function $(id) {
   return document.getElementById(id);
+}
+
+function addZero(i) {
+  if (i < 10) {
+    i = "0" + i;
+  }
+  return i;
 }
